@@ -2,6 +2,8 @@
 # see all versions at https://hub.docker.com/r/oven/bun/tags
 FROM oven/bun:1 AS base
 WORKDIR /usr/src/app
+RUN apt-get update
+RUN apt-get install -y cron
 
 # install dependencies into temp directory
 # this will cache them and speed up future builds
