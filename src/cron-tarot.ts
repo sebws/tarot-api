@@ -19,7 +19,7 @@ export const main = async () => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      merge_variables: randomFile,
+      merge_variables: { ...randomFile, reversed: Math.random() < 0.5 },
     }),
   });
 
