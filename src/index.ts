@@ -17,6 +17,15 @@ app.get("/random", () => {
   return Response.json(randomFile);
 });
 
+app.get("/list", () => {
+  return Response.json(
+    cards.map((card, index) => ({
+      card,
+      index,
+    })),
+  );
+});
+
 app.get("/force-random", async () => {
   const body = await cronMain();
   return Response.json({ message: "Tarot card sent", body });
