@@ -17,9 +17,21 @@ app.get("/random", () => {
   return Response.json(randomFile);
 });
 
-app.get("/force", async () => {
-  await cronMain();
-  return Response.json({ message: "Tarot card sent" });
+app.get("/force-random", async () => {
+  const body = await cronMain();
+  return Response.json({ message: "Tarot card sent", body });
+});
+
+app.get("/force-set/:index", async (c) => {
+  const indexStr = c.req.param("index");
+  const index = parseInt(indexStr, 10);
+
+  if (Number.isNaN(index) || index < 0 || index >= cards.length) {
+    return Response.json({ error: "Invalid index" }, 400);
+  }
+
+  const body = await cronMain(cards[index]);
+  return Response.json({ message: "Tarot card sent", body });
 });
 
 app.use("/public/*", serveStatic({ root: "./" }));
